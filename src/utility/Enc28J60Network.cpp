@@ -36,7 +36,7 @@ extern "C" {
 // set CS to 1 = passive
 #define CSPASSIVE digitalWrite(csPin, HIGH)
 
-#define SPI_ETHERNET_SETTINGS SPISettings(20000000, MSBFIRST, SPI_MODE0)
+#define SPI_ETHERNET_SETTINGS SPISettings(8000000, MSBFIRST, SPI_MODE0)
 //
 bool Enc28J60Network::spiInitialized=false;
 uint8_t Enc28J60Network::csPin=SS;
@@ -95,7 +95,7 @@ bool Enc28J60Network::init(uint8_t* macaddr)
   // 06 08 -- ff ff ff ff ff ff -> ip checksum for theses bytes=f7f9
   // in binary these poitions are:11 0000 0011 1111
   // This is hex 303F->EPMM0=0x3f,EPMM1=0x30
-  writeReg(ERXFCON, ERXFCON_UCEN|ERXFCON_CRCEN|ERXFCON_PMEN);
+  writeReg(ERXFCON, ERXFCON_UCEN|ERXFCON_CRCEN|ERXFCON_PMEN|ERXFCON_BCEN);
   writeRegPair(EPMM0, 0x303f);
   writeRegPair(EPMCSL, 0xf7f9);
   //
